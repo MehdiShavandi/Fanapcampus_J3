@@ -1,0 +1,9 @@
+--- 
+- name: deploy project stack 
+  hosts: shavandy.ir
+  roles: 
+    #- preparing-server
+    - docker-installation
+    - registry
+    - wordpress
+    - nginx

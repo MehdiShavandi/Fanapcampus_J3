@@ -1,0 +1,18 @@
+version: "3"  # Adjust the version based on your Docker Compose version
+
+services:
+  nginx:
+    image: "nginx:alpine"
+    ports:
+      - 443:443
+      - 80:80
+    volumes:
+      - /opt/services/auth:/etc/nginx/conf.d
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - web_net
+
+networks:
+  web_net:
+    external: true
+    name: web_net

@@ -1,0 +1,14 @@
+---
+- name: Creates directory
+  file:
+    path: "{{item}}"
+    state: directory
+  loop:
+    - "{{root_dir}}"
+    - "{{root_dir}}/registry"
+
+- name: copy Docker Compose files
+  template:
+    src: registry/docker-compose.yaml.j2
+    dest: "{{root_dir}}/registry/docker-compose.yaml"
+

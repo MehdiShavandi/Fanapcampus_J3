@@ -1,0 +1,24 @@
+!/bin/bash
+
+# Create htpasswd file
+# sudo htpasswd -c /opt/services/auth/nginx.htpasswd Mehdi 
+# sudo htpasswd /opt/services/auth/nginx.htpasswd Shavandi
+# htpasswd -Bc auth/nginx.htpasswd mehdi
+
+# Check htpasswd file
+#cat auth/nginx.htpasswd
+
+# Create certificate files in the auth/ directory
+CERT_LOCATION=/opt/services/auth
+
+# Generate key and cert
+openssl req -x509 -nodes -newkey rsa:4096 -days 365 \
+-keyout $CERT_LOCATION/key.pem \
+-subj "/C=IR/ST=Iran/L=Tehran/O=DockerMe/OU=IT/CN=Shavandy.ir/emailAddress=mhdi.shavandi@gmail.com" \
+-out $CERT_LOCATION/cert.pem 
+
+# Check certificate
+openssl x509 -text -noout -in $CERT_LOCATION/cert.pem
+
+# Check directory structure
+#tree

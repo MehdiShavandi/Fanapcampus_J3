@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  registry:
+    image: registry:2
+    volumes:
+      - ./data:/var/lib/registry
+      - /opt/services/auth:/auth
+    networks:
+      - web_net
+    environment:  
+       REGISTRY_AUTH: htpasswd
+       REGISTRY_AUTH_HTPASSWD_PATH: /auth/nginx.htpasswd
+       REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+
+networks:
+  web_net:
+    external: true

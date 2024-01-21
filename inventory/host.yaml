@@ -1,0 +1,9 @@
+all:
+  children:
+    web-servers:
+      hosts:
+        shavandy.ir:
+          ansible_host: 192.168.56.101
+          ansible_user: root
+          ansible_port: 22
+          ansible_ssh_private_key_file: /home/mehdi/.ssh/id_rsa

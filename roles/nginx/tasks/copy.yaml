@@ -1,0 +1,36 @@
+---
+- name: Creates directory
+  file:
+    path: "{{item}}"
+    state: directory
+  loop:
+    - "{{root_dir}}"
+    - "{{root_dir}}/nginx"
+    - "{{root_dir}}/auth"
+
+- name: copy nginx config
+  template:
+    src: nginx/nginx.conf.j2
+    dest: "{{root_dir}}/nginx/nginx.conf"
+
+- name: copy Docker Compose files
+  template:
+    src: nginx/docker-compose.yaml.j2
+    dest: "{{root_dir}}/nginx/docker-compose.yaml"
+
+- name: Copy the Bash script to the remote server
+  template:
+    src: nginx/script.sh.j2
+    dest: "{{root_dir}}/nginx/script.sh"
+    mode: 0755  # Ensure script is executable
+
+- name: Install apache2-utils (htpasswd)
+  apt:
+    name: apache2-utils
+    state: present  # This ensures the package is installed
+
+# - name: Run htpasswd command
+#   command: "htpasswd -c /path/to/auth/nginx.htpasswd Mehdi"
+
+- name: Execute the Bash script
+  shell: "{{root_dir}}/nginx/script.sh"
